@@ -7,8 +7,7 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
-import Component from 'vue-class-component';
+import { Component, Vue } from 'vue-property-decorator';
 
 import DataList from '@/components/DataList.vue';
 import Footer from '@/components/Footer.vue';
@@ -21,10 +20,10 @@ import Users from '@/api/weather';
     DataList,
     Footer,
     Navbar,
-  }
+  },
 })
 export default class Main extends Vue {
-  private openWeather = {}
+  private openWeather = {};
 
   private async created() {
     const openWeather = await Users.getOpenWeatherData();
