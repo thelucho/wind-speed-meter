@@ -1,15 +1,11 @@
 <template>
-  <div class="navbar bg-solid">
-    <h1>Wind Speed Meter</h1>
+  <div class="navbar">
+    <h1>¡Hola droner!</h1>
+    <p>¿Cómo están los vientos para volar hoy?</p>
     <div class="search">
-      <b-field>
-        <b-input placeholder="Search..."
-          type="search"
-          icon-pack="fas"
-          icon="home"
-          icon-clickable
-          @icon-click="searchIconClick">
-        </b-input>
+      <b-field grouped position="is-right">
+        <b-input placeholder="Ingresá tu ciudad..." type="search"></b-input>
+        <b-button label="Buscar" type="is-info" />
       </b-field>
     </div>
   </div>
@@ -19,8 +15,8 @@
 import { Component, Vue } from 'vue-property-decorator';
 
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faSearch } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+import { faSearch } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 library.add(faSearch);
 
 @Component({
@@ -28,16 +24,13 @@ library.add(faSearch);
     FontAwesomeIcon,
   },
 })
-export default class Navbar extends Vue {
-  private searchIconClick() {
-    console.log('busqueda');
-  }
-}
+export default class Navbar extends Vue { }
 </script>
 
 <style lang="scss">
 .navbar {
-  position: sticky;
+  background-color: var(--color-accent) !important;
+  position: sticky !important;
   top: 0;
   width: 100%;
   min-height: 100px;
@@ -49,20 +42,52 @@ export default class Navbar extends Vue {
   flex-flow: column;
   justify-content: center;
   align-items: center;
-}
+  
 
-.navbar h1 {
-  font-size: 19px;
-  font-weight: bold;
-}
+  h1 {
+    font-size: 21px;
+    font-weight: bold;
+    color: $white;
+  }
 
-.navbar .search {
-  width: 100%;
-  margin-top: 10px;
-}
+  p {
+    color: $white;
+    font-size: 16px;
+  }
 
-.navbar .search .input {
-  border-radius: 30px;
-  width: 100%;
+  .search {
+    width: 100%;
+    margin-top: 10px;
+
+    .input {
+      border-radius: 30px;
+      width: 100%;
+      height: 40px;
+      position: relative;
+      padding-left: 20px !important;
+      font-size: 15px;
+      border: none !important;
+
+      &:focus,
+      &:active {
+        outline: none !important;
+        box-shadow: none !important;
+        border: none !important;
+      }
+    }
+
+    .button {
+      position: absolute;
+      border-radius: 30px;
+      border: 2px solid $white !important;
+      height: 40px;
+      background-color: var(--color-accent);
+    }
+  }
+
+  .field.is-grouped > .control {
+    width: 100%;
+    margin-right: 0px !important;
+  }
 }
 </style>

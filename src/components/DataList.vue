@@ -1,12 +1,23 @@
 <template>
   <div class="data-list">
-    <DataItem
+    <DataListItem
       v-if="openWeather.wind"
       name="Open Weather"
-      :speed="getFormattedSpeed(openWeather.wind.speed)"
-      :status="getSpeedAnalysis(openWeather.wind.speed).status"
-      :type="getSpeedAnalysis(openWeather.wind.speed).type"
+      :speed="openWeather.wind.speed"
     />
+
+    <DataListItem
+      v-if="weatherAPI.current"
+      name="Weather API"
+      :speed="weatherAPI.current.wind_kph"
+    />
+
+    <DataListItem
+      v-if="stormglass.hours"
+      name="Stormglass"
+      :speed="stormglass.hours[stormglass.hours.length - 1].windSpeed.noaa"
+    />
+
     <div class="box">I'm in a box.</div>
     <div class="box">I'm in a box.</div>
     <div class="box">I'm in a box.</div>
@@ -23,44 +34,23 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
-import DataItem from '@/components/DataItem.vue';
+import DataListItem from '@/components/DataListItem.vue';
 
 @Component({
   components: {
-    DataItem,
+    DataListItem,
   },
 })
 export default class DataList extends Vue {
   @Prop(Object) private openWeather!: any;
-
-  private getFormattedSpeed(speed: number): number {
-    const res = Math.round(speed * 1.609);
-    return res;
-  }
-
-  private getSpeedAnalysis(speed: number) {
-    const wind = this.getFormattedSpeed(speed);
-
-    const condition = {
-      status: 'regular',
-      type: 'is-warning',
-    };
-
-    if (wind < 12) {
-      condition.status = 'good';
-      condition.type = 'is-success';
-    } else if (wind > 24) {
-      condition.status = 'bad';
-      condition.type = 'is-warning';
-    }
-
-    return condition;
-  }
+  @Prop(Object) private weatherAPI!: any;
+  @Prop(Object) private stormglass!: any;
 }
 </script>
 
 <style lang="scss" scoped>
 .data-list {
+  background-color: var(--color-secondary);
   padding: 25px 15px;
 }
 </style>

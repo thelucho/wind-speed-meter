@@ -1,8 +1,17 @@
 <template>
   <div class="main">
     <Navbar />
-    <DataList :openWeather="openWeather" />
+    <DataList
+      :openWeather="openWeather"
+      :weatherAPI="weatherAPI"
+      :stormglass="stormglass"
+    />
     <Footer />
+    <b-loading
+      :is-full-page="false"
+      v-model="isLoading"
+      :can-cancel="false"
+    ></b-loading>
   </div>
 </template>
 
@@ -24,23 +33,53 @@ import Users from '@/api/weather';
 })
 export default class Main extends Vue {
   private openWeather = {};
+  private weatherAPI = {};
+  private stormglass = {};
+
+  private isLoading = false;
 
   private async created() {
-    const openWeather = await Users.getOpenWeatherData();
-    this.openWeather = openWeather;
+    this.isLoading = true;
+
+    try {
+      const [openWeather, weatherAPI] = await Promise.all([
+        Users.getOpenWeatherData(),
+        Users.getWeatherAPIData(),
+      ]);
+
+      if (openWeather) {
+        this.stormglass = await Users.getStormglassData(openWeather.coord.lat, openWeather.coord.lon);
+      }
+
+      this.openWeather = openWeather;
+      this.weatherAPI = weatherAPI;
+      this.isLoading = false;
+    } catch (err) {
+      console.log(err);
+      this.isLoading = false;
+    }
   }
 }
 </script>
 
 <style lang="scss" scoped>
 .main {
+  background-color: var(--color-secondary);
   display: flex;
   min-height: 100vh;
   flex-direction: column;
-}
 
-.section {
-  flex: 1;
+  .section {
+    flex: 1;
+  }
 }
 </style>
 
+<style lang="scss">
+.loading-overlay {
+  .loading-background {
+    background-color: rgba(0, 62, 231, 0.856) !important;
+    transition: all 2s ease-in-out;
+  }
+}
+</style>

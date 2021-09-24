@@ -1,7 +1,7 @@
-import Vue from "vue";
+import Vue from 'vue';
 
 export const ACTIONS = {
-  SWITCH_MODE: "switch-mode",
+  SWITCH_MODE: 'switch-mode',
 };
 
 const EventBus = new Vue();

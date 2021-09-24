@@ -8,61 +8,32 @@
 import { Component, Vue } from 'vue-property-decorator';
 import Main from './components/Main.vue';
 
-import EventBus, { ACTIONS } from "@/event-bus";
-
 @Component({
   components: {
     Main,
   },
 })
-export default class App extends Vue {
-  private themeMode = false;
-
-  private mounted() {
-    EventBus.$on(ACTIONS.SWITCH_MODE, this.handleThemeMode);
-  }
-
-  private handleThemeMode() {
-    const body = document.getElementsByTagName('body')[0];
-
-    this.themeMode = !this.themeMode;
-    this.themeMode ? body.classList.add('dark-mode') : body.classList.remove('dark-mode');
-  }
-}
+export default class App extends Vue { }
 </script>
 
 <style lang="scss">
-// Colors
-$black: #000;
-$black50: #202020;
-$grey: #4b4b4b;
-$grey50: #808080;
-$grey10: #e0e0e0;
-$white: #fff;
-
-// Light Theme
-$bg-theme-light: $white;
-$color-theme-light: $black;
-
-// Dark Theme
-$bg-theme-dark: $black;
-$color-theme-dark: $white;
-
 body {
-  background-color: $bg-theme-light;
-  color: $color-theme-light;
+  font-family: $font-family !important;
+  font-weight: $font-regular !important;
 }
 
-body.dark-mode {
-  background-color: $bg-theme-dark;
-  color: $color-theme-dark;
+.theme-light {
+  --color-primary: #fff;
+  --color-secondary: #efefef;
+  --color-accent: #3965fe;
+  --font-color: #000;
+  transition: background-color 1s;
 }
-
-.bg-solid {
-  background-color: $grey10 !important;
-}
-
-.dark-mode .bg-solid {
-  background-color: $black50 !important;
+.theme-dark {
+  --color-primary: #000;
+  --color-secondary: #4b4b4b;
+  --color-accent: #202020;
+  --font-color: #fff;
+  transition: background-color 1s;
 }
 </style>
