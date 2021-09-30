@@ -22,6 +22,14 @@ class WeatherService {
     return this._getAuth(`${process.env.VUE_APP_BASE_URL_STORMGLASS}?lat=${lat}&lng=${lng}&params=${params}&end=${today}`, process.env.VUE_APP_API_KEY_STORMGLASS);
   }
 
+  public async getAccuWeatherData(lat: any, lng: any): Promise<any> {
+    return this._get(`${process.env.VUE_APP_BASE_URL_ACCUWEATHER}locations/v1/cities/geoposition/search?apikey=${process.env.VUE_APP_API_KEY_ACCUWEATHER}&q=${lat},${lng}`);
+  }
+
+  public async getAccuWeatherDataLocation(locationId: any): Promise<any> {
+    return this._get(`${process.env.VUE_APP_BASE_URL_ACCUWEATHER}currentconditions/v1/${locationId}?apikey=${process.env.VUE_APP_API_KEY_ACCUWEATHER}&details=true`);
+  }
+
   private async _get(uri: string): Promise<any> {
     const response = await fetch(uri, {
       method: 'GET',

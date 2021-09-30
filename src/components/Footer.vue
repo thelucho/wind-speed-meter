@@ -27,7 +27,7 @@ export default class Footer extends Vue { }
 <style lang="scss" scoped>
 .footer {
   background-color: var(--color-accent) !important;
-  position: sticky;
+  position: fixed;
   bottom: 0;
   width: 100%;
   padding: 25px 30px;

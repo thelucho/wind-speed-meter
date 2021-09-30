@@ -25,7 +25,7 @@ export default class DataListItem extends Vue {
       this.formatedSpeed = Math.round(this.speed * 3.6);
     }
 
-    if (this.name === 'Weather API') {
+    if (this.name === 'Weather API' || this.name === 'Accuweather') {
       this.formatedSpeed = this.speed;
     }
   }

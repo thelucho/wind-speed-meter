@@ -18,17 +18,12 @@
       :speed="stormglass.hours[stormglass.hours.length - 1].windSpeed.noaa"
     />
 
-    <div class="box">I'm in a box.</div>
-    <div class="box">I'm in a box.</div>
-    <div class="box">I'm in a box.</div>
-    <div class="box">I'm in a box.</div>
-    <div class="box">I'm in a box.</div>
-    <div class="box">I'm in a box.</div>
-    <div class="box">I'm in a box.</div>
-    <div class="box">I'm in a box.</div>
-    <div class="box">I'm in a box.</div>
-    <div class="box">I'm in a box.</div>
-    <div class="box">I'm in a box.</div>
+    <DataListItem
+      v-if="accuweather"
+      name="Accuweather"
+      :speed="accuweather.Wind.Speed.Metric.Value"
+    />
+
   </div>
 </template>
 
@@ -45,6 +40,7 @@ export default class DataList extends Vue {
   @Prop(Object) private openWeather!: any;
   @Prop(Object) private weatherAPI!: any;
   @Prop(Object) private stormglass!: any;
+  @Prop(Object) private accuweather!: any;
 }
 </script>
 

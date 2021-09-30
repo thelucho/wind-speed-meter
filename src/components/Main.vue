@@ -5,6 +5,7 @@
       :openWeather="openWeather"
       :weatherAPI="weatherAPI"
       :stormglass="stormglass"
+      :accuweather="accuweather[0]"
     />
     <Footer />
     <b-loading
@@ -35,6 +36,7 @@ export default class Main extends Vue {
   private openWeather = {};
   private weatherAPI = {};
   private stormglass = {};
+  private accuweather = {};
 
   private isLoading = false;
 
@@ -49,6 +51,15 @@ export default class Main extends Vue {
 
       if (openWeather) {
         this.stormglass = await Users.getStormglassData(openWeather.coord.lat, openWeather.coord.lon);
+      }
+
+      if (openWeather) {
+        let object: any;
+        object = await Users.getAccuWeatherData(openWeather.coord.lat, openWeather.coord.lon);
+
+        if (object) {
+          this.accuweather = await Users.getAccuWeatherDataLocation(object.Key);
+        }
       }
 
       this.openWeather = openWeather;
