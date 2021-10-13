@@ -23,6 +23,7 @@ import DataList from '@/components/DataList.vue';
 import Footer from '@/components/Footer.vue';
 import Navbar from '@/components/Navbar.vue';
 
+import EventBus, { ACTIONS } from '@/event-bus';
 import Users from '@/api/weather';
 
 @Component({
@@ -39,8 +40,17 @@ export default class Main extends Vue {
   private accuweather = {};
 
   private isLoading = false;
+  private searchText = '';
 
   private async created() {
+    this.fetchWeatherData('test');
+  }
+
+  private mounted() {
+    EventBus.$on(ACTIONS.SEARCH_LOCATION, this.fetchWeatherData);
+  }
+
+  private async fetchWeatherData(text: string) {
     this.isLoading = true;
 
     try {

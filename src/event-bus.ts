@@ -1,7 +1,7 @@
 import Vue from 'vue';
 
 export const ACTIONS = {
-  SWITCH_MODE: 'switch-mode',
+  SEARCH_LOCATION: 'search-location',
 };
 
 const EventBus = new Vue();
