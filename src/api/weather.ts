@@ -8,12 +8,12 @@ class WeatherService {
     return WeatherService.bfInternal;
   }
 
-  public async getOpenWeatherData(): Promise<any> {
-    return this._get(`${process.env.VUE_APP_BASE_URL_OPEN_WEATHER}weather?q=Rio Cuarto&units=metric&appid=${process.env.VUE_APP_API_KEY_OPEN_WEATHER}`);
+  public async getOpenWeatherData(location: string): Promise<any> {
+    return this._get(`${process.env.VUE_APP_BASE_URL_OPEN_WEATHER}weather?q=${location}&units=metric&appid=${process.env.VUE_APP_API_KEY_OPEN_WEATHER}`);
   }
 
-  public async getWeatherAPIData(): Promise<any> {
-    return this._get(`${process.env.VUE_APP_BASE_URL_WEATHER_API}?key=${process.env.VUE_APP_API_KEY_WEATHER_API}&q=Rio Cuarto&aqi=no`);
+  public async getWeatherAPIData(location: string): Promise<any> {
+    return this._get(`${process.env.VUE_APP_BASE_URL_WEATHER_API}?key=${process.env.VUE_APP_API_KEY_WEATHER_API}&q=${location}&aqi=no`);
   }
 
   public async getStormglassData(lat: any, lng: any): Promise<any> {

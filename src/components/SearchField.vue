@@ -2,7 +2,7 @@
   <div class="search">
     <b-field grouped position="is-right">
       <b-input placeholder="Ingresá tu ciudad..." type="search" v-model="searchText"></b-input>
-      <b-button label="Buscar" type="is-info" @click="submitSearch()" />
+      <b-button label="Buscar" type="is-info" @click.prevent="submitSearch()" />
     </b-field>
   </div>
 </template>

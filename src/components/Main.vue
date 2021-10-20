@@ -2,11 +2,13 @@
   <div class="main">
     <Navbar />
     <DataList
+      v-if="Object.keys(openWeather).length"
       :openWeather="openWeather"
       :weatherAPI="weatherAPI"
       :stormglass="stormglass"
       :accuweather="accuweather[0]"
     />
+    <EmptyData v-if="showEmptyMsg" />
     <Footer />
     <b-loading
       :is-full-page="false"
@@ -20,6 +22,7 @@
 import { Component, Vue } from 'vue-property-decorator';
 
 import DataList from '@/components/DataList.vue';
+import EmptyData from '@/components/EmptyData.vue';
 import Footer from '@/components/Footer.vue';
 import Navbar from '@/components/Navbar.vue';
 
@@ -29,6 +32,7 @@ import Users from '@/api/weather';
 @Component({
   components: {
     DataList,
+    EmptyData,
     Footer,
     Navbar,
   },
@@ -41,22 +45,35 @@ export default class Main extends Vue {
 
   private isLoading = false;
   private searchText = '';
+  private showEmptyMsg = false;
 
   private async created() {
-    this.fetchWeatherData('test');
+    const locationLS = localStorage.getItem('location');
+
+    if (locationLS) {
+      this.fetchWeatherData(locationLS);
+    } else {
+      this.showEmptyMsg = true;
+    }
   }
 
   private mounted() {
     EventBus.$on(ACTIONS.SEARCH_LOCATION, this.fetchWeatherData);
   }
 
-  private async fetchWeatherData(text: string) {
+  private async fetchWeatherData(location: string) {
     this.isLoading = true;
+    this.showEmptyMsg = false;
+
+    this.openWeather = {};
+    this.weatherAPI = {};
+    this.stormglass = {};
+    this.accuweather = {};
 
     try {
       const [openWeather, weatherAPI] = await Promise.all([
-        Users.getOpenWeatherData(),
-        Users.getWeatherAPIData(),
+        Users.getOpenWeatherData(location),
+        Users.getWeatherAPIData(location),
       ]);
 
       if (openWeather) {
@@ -77,6 +94,7 @@ export default class Main extends Vue {
       this.isLoading = false;
     } catch (err) {
       console.log(err);
+      this.showEmptyMsg = true;
       this.isLoading = false;
     }
   }
