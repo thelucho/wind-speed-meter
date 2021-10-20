@@ -9,7 +9,7 @@
       :accuweather="accuweather[0]"
     />
     <EmptyData v-if="showEmptyMsg" />
-    <Footer />
+    <Footer :location="searchText" />
     <b-loading
       :is-full-page="false"
       v-model="isLoading"
@@ -65,6 +65,7 @@ export default class Main extends Vue {
     this.isLoading = true;
     this.showEmptyMsg = false;
 
+
     this.openWeather = {};
     this.weatherAPI = {};
     this.stormglass = {};
@@ -76,8 +77,12 @@ export default class Main extends Vue {
         Users.getWeatherAPIData(location),
       ]);
 
-      if (openWeather) {
-        this.stormglass = await Users.getStormglassData(openWeather.coord.lat, openWeather.coord.lon);
+      try {
+        if (openWeather) {
+          this.stormglass = await Users.getStormglassData(openWeather.coord.lat, openWeather.coord.lon);
+        }
+      } catch (err) {
+        console.log(err);
       }
 
       if (openWeather) {
@@ -89,12 +94,14 @@ export default class Main extends Vue {
         }
       }
 
+      this.searchText = `${openWeather.name}, ${openWeather.sys.country}`;
       this.openWeather = openWeather;
       this.weatherAPI = weatherAPI;
       this.isLoading = false;
     } catch (err) {
       console.log(err);
       this.showEmptyMsg = true;
+      this.searchText = '';
       this.isLoading = false;
     }
   }

@@ -6,14 +6,15 @@
       </div>
       <div class="location">
         <b-icon pack="fas" icon="location-arrow"></b-icon>
-        Rio Cuarto, Argentina
+        <template v-if="location">{{ location }}</template>
+        <template v-else>No location</template>
       </div>
     </div>
   </footer>
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
+import { Component, Prop, Vue } from 'vue-property-decorator';
 import SwitcherTheme from '@/components/SwitcherTheme.vue';
 
 @Component({
@@ -21,7 +22,9 @@ import SwitcherTheme from '@/components/SwitcherTheme.vue';
     SwitcherTheme,
   },
 })
-export default class Footer extends Vue { }
+export default class Footer extends Vue {
+  @Prop(String) private location!: string;
+}
 </script>
 
 <style lang="scss" scoped>
