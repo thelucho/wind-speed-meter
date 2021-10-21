@@ -1,0 +1,23 @@
+{
+  "name": "Wind Speed Meter",
+  "short_name": "Wind Speed Meter",
+  "description": "Wind speed analyzer from many sources.",
+  "icons": [
+    {
+      "src": "/img/icons/pwa-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/img/icons/pwa-256x256.png",
+      "sizes": "256x256",
+      "type": "image/png"
+    }
+  ],
+  "scope": ".",
+  "start_url": "/?utm_source=a2hs",
+  "display": "standalone",
+  "orientation": "portrait",
+  "theme_color": "#3965fe",
+  "background_color": "#3965fe"
+}
